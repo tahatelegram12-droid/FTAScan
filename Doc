@@ -1,0 +1,413 @@
+# FTA REPORT
+## Digital Wallets & Mule Accounts Process
+### Standard Operating Procedure (SOP)
+
+**Document Purpose:** Provide a consistent, step-by-step process for preparing and submitting FTA Digital Wallets and Mule Accounts results.
+
+**Primary Outputs:**
+- Completed FTA-Scan Result Excel workbook.
+- Updated FTA-Results PowerPoint presentation.
+
+**Process Contributors:** Fraud Threat Intelligence, Card Management, Call Sign, EFM and Inventory teams, as applicable.
+
+**Classification:** PUBLIC (as marked in the source procedure; follow current internal data-handling rules).
+
+**Working Instruction:** Complete each step in sequence. Validate all figures against the source data before submission.
+
+---
+
+# 1. Purpose and Scope
+
+This procedure describes how to receive the FTA scan results, prepare the supporting Excel workbook, calculate Digital Wallets card/device metrics and Mule Account results, update the PowerPoint summary, and submit the completed files for review.
+
+# 2. Inputs and Required Files
+
+| File / Input | Purpose | Handling Notes |
+|---|---|---|
+| FTA email from Fraud Threat Intelligence (SAMA) | Source of the scan results and supporting attachments. | Confirm the FTA reference and download all attachments. |
+| FTA-Scan Result vX.X (Excel) | Working workbook containing Digital Wallets and Mule Accounts data. | Preserve the source data; save a working copy if required. |
+| Digital Wallets IoF | Supporting Digital Wallets data referenced in the process. | Confirm whether this is a separate file or a workbook sheet. |
+| FTA-Results (PowerPoint) | Summary presentation; Slide 2 covers Digital Wallets and Slide 3 covers Mule Accounts. | Update only the relevant figures and comments. |
+| EFM results / access | Used to verify whether device IDs are blacklisted. | Use authorized access and confirmed results. |
+| Call Sign / Card Management responses | Provide account classifications, card status/details and action comments as applicable. | Retain the team-confirmed information. |
+
+# 3. Roles and Dependencies
+
+- **Fraud Threat Intelligence (SAMA):** Sends the FTA email and scan-result attachments.
+- **Card Management:** May provide card number and card status using the Token Reference ID. This is an optional step.
+- **EFM:** Source used to verify blacklisted device IDs.
+- **Call Sign team:** Provides Mule Account data/classification and action-taken comments.
+- **Inventory team (Ohood):** Reviews the completed Excel workbook and PowerPoint.
+
+---
+
+# 4. Step 1 — Receive the Email and Prepare the Excel Workbook
+
+## Objective
+
+Prepare the source workbook and request the card details/status needed for the report.
+
+## Procedure
+
+1. Open the email from Fraud Threat Intelligence (SAMA) and confirm the FTA reference in the subject.
+2. Download all five attachments: three Excel files, one PowerPoint and one PDF manual, as stated in the source procedure.
+3. Save the attachments in the approved working folder and open `FTA-Scan Result vX.X`.
+4. Identify the Digital Wallets data sheet and review the existing column headers.
+5. Add the `Card Number` and `Card Status` columns if they are not already present. Do not overwrite populated data.
+6. Send the required files (`Digital Wallets IoF` and `FTA-Scan Result vX.X`) to the recipients listed in the approved internal procedure, using the prescribed To/CC list.
+
+## Expected Output
+
+Prepared workbook and request sent to the relevant team.
+
+## Control / Note
+
+Confirm whether Digital Wallets IoF is a separate workbook or a sheet; the screenshots do not make this clear.
+
+Use approved recipients and internal email-handling rules.
+
+## Suggested Email — Digital Wallets
+
+**Subject:** FTA Scan Results – Digital Wallets
+
+Hi Team,
+
+Please find attached the Digital Wallets IoF and FTA Scan Result files for your review and further processing.
+
+Kindly review the data and provide the required card details and status information.
+
+Regards,  
+[Your Name]
+
+---
+
+# 5. Step 2 — Obtain Card Details from Card Management (Optional)
+
+## Objective
+
+Retrieve card number and status details using the Token Reference ID where these details are unavailable.
+
+## Procedure
+
+1. Open the relevant FTA scan-results workbook and locate the `Token Reference ID` column.
+2. Check whether `Card Number` and `Card Status` are already populated.
+3. If details are missing, send the scan results to the authorized Card Management contacts listed in the internal procedure.
+4. Request the corresponding card number and card status using the Token Reference ID.
+5. After receiving the response, update the relevant rows and validate the mapping before saving.
+
+## Expected Output
+
+Available card numbers and statuses are recorded against the correct source records.
+
+## Control / Note
+
+This step is optional in the source procedure.
+
+Share only the minimum required information through approved channels.
+
+---
+
+# 6. Step 3 — Calculate Card and Device Metrics
+
+## Objective
+
+Calculate unique cards, unique devices and the number of blacklisted devices.
+
+## Procedure
+
+1. In the Digital Wallets data, locate the `ENCRYPTED_PAN` column.
+2. Count distinct, nonblank `ENCRYPTED_PAN` values. Record this as **Total Unique Cards**.
+3. Locate the `SEID` column and count distinct, nonblank device IDs. Record this as **Total Unique Devices**.
+4. Check the unique device IDs in EFM using the authorized process.
+5. Record the number of devices confirmed as blacklisted. Do not infer blacklist status from the scan file alone.
+
+## Expected Output
+
+Three verified metrics:
+
+- Total Unique Cards
+- Total Unique Devices
+- Blacklisted Devices
+
+## Excel Formula Examples
+
+The following formulas are examples for Excel 365. Replace the sample ranges with the actual column ranges and verify the data type/format.
+
+### A. Count Unique Cards
+
+```excel
+=COUNTA(UNIQUE(FILTER(A2:A1000,A2:A1000<>"")))
+```
+
+**Assumption:** `A2:A1000` represents the `ENCRYPTED_PAN` column.
+
+**Explanation:**
+- `FILTER` excludes blank cells.
+- `UNIQUE` returns distinct card values.
+- `COUNTA` counts the resulting nonblank values.
+
+**Output:** Total number of unique cards.
+
+### B. Count Unique Devices
+
+```excel
+=COUNTA(UNIQUE(FILTER(B2:B1000,B2:B1000<>"")))
+```
+
+**Assumption:** `B2:B1000` represents the `SEID` column.
+
+**Explanation:**
+- `FILTER` excludes blank cells.
+- `UNIQUE` returns distinct device IDs.
+- `COUNTA` counts the distinct nonblank device IDs.
+
+**Output:** Total number of unique devices.
+
+## Important Validation
+
+- Verify that the formulas reference the correct columns.
+- Confirm that blank values are excluded.
+- Confirm that the results represent distinct values rather than total rows.
+- Verify blacklisted devices separately in EFM.
+- Record only the number of devices confirmed as blacklisted.
+
+---
+
+# 7. Step 4 — Update FTA-Results PowerPoint, Slide 2
+
+## Objective
+
+Summarize the Digital Wallets card/device results and confirmed actions.
+
+## Procedure
+
+1. Open `FTA-Results` and navigate to **Slide 2 — Digital Wallets Accounts Results**.
+2. Enter the total unique card count and total unique device count from Step 3.
+3. Enter the number of devices confirmed as blacklisted in EFM.
+4. Add card action counts/comments, such as deactivated, inactive or deleted, only where supported by confirmed records.
+5. Compare every figure on the slide with the Excel workbook.
+6. Save the presentation.
+
+## Expected Output
+
+Slide 2 contains validated Digital Wallets metrics and action comments.
+
+## Control / Note
+
+Use actual report figures. Do not use illustrative/sample numbers in the final presentation.
+
+## Suggested Results Wording
+
+A total of **[X] unique cards** and **[Y] unique devices** were identified in the FTA scan results.
+
+Of the identified cards:
+- [A] were deactivated.
+- [B] were inactive.
+- [C] were deleted.
+
+Of the [Y] unique devices, [D] were confirmed as blacklisted.
+
+Replace all placeholders with verified figures before submission.
+
+---
+
+# 8. Step 5 — Collect Mule Account Data from the Call Sign Team
+
+## Objective
+
+Obtain the account-level data and classification required to calculate Mule Account results.
+
+## Procedure
+
+1. Open `FTA-Scan Result vX.X` and navigate to the **Mule Accounts** sheet, identified as Sheet 1 in the source procedure.
+2. Review the available account records and identify the following columns:
+   - `National ID`
+   - `Account Result (Mule/Normal)`
+3. Request the required Mule Account data and classifications from the Call Sign team.
+4. Update the workbook with the team-confirmed information and check that the account classifications are available.
+5. Obtain action-taken comments from the Call Sign team for use in the PowerPoint.
+
+## Expected Output
+
+The Mule Accounts sheet is populated with the data needed for reporting.
+
+## Control / Note
+
+Do not independently change account classifications. Use the authorized team's confirmed results.
+
+---
+
+# 9. Step 6 — Calculate Mule Account Results and Update Slide 3
+
+## Objective
+
+Calculate total account records, false positives and true positives, then record them on Slide 3.
+
+## Procedure
+
+### A. Confirm the Total Number of National IDs
+
+1. Confirm the agreed counting rule for the total number of National IDs: all records or distinct National IDs.
+2. Count total records using the agreed rule and record the result.
+
+**Important:** The original screenshots do not specify whether the total National ID metric should count every record or only distinct IDs. Confirm the required rule before calculating the final result.
+
+### B. Calculate False Positives
+
+1. Locate the `Account Result (Mule/Normal)` column.
+2. Count records classified as `Normal`.
+3. Record the count as **False Positives**.
+
+The source procedure defines:
+
+**Normal = False Positive**
+
+### C. Calculate True Positives
+
+1. Locate the `Account Result (Mule/Normal)` column.
+2. Count records classified as `Mule`.
+3. Record the count as **True Positives**.
+
+The source procedure defines:
+
+**Mule = True Positive**
+
+## Excel Formula Examples
+
+Assume the `Account Result (Mule/Normal)` values are in column C.
+
+### A. Count False Positives
+
+```excel
+=COUNTIF(C:C,"Normal")
+```
+
+**Explanation:**
+- `COUNTIF` counts cells that meet a specified condition.
+- `C:C` represents the Account Result column.
+- `"Normal"` is the classification being counted.
+
+**Output:** Total number of records classified as Normal.
+
+### B. Count True Positives
+
+```excel
+=COUNTIF(C:C,"Mule")
+```
+
+**Explanation:**
+- `COUNTIF` counts cells that meet a specified condition.
+- `C:C` represents the Account Result column.
+- `"Mule"` is the classification being counted.
+
+**Output:** Total number of records classified as Mule.
+
+## D. Update the PowerPoint
+
+1. Open `FTA-Results`.
+2. Navigate to **Slide 3 — Mule Account Results**.
+3. Enter the total, false-positive and true-positive counts.
+4. Add the action-taken comments supplied by the Call Sign team.
+5. Reconcile the figures and save the presentation.
+
+## Expected Output
+
+Slide 3 contains the verified Mule Account results and team-provided comments.
+
+## Control / Note
+
+If all records are classified as either Normal or Mule, the following should hold:
+
+**Normal Count + Mule Count = Classified Total**
+
+Investigate blanks, other labels or duplicates if the totals do not reconcile.
+
+---
+
+# 10. Step 7 — Final Validation and Submission
+
+## Objective
+
+Ensure both deliverables are complete, consistent and ready for Inventory team review.
+
+## Procedure
+
+1. Check the Digital Wallets sheet:
+   - Card Number and Card Status fields.
+   - Distinct card count.
+   - Distinct device count.
+   - EFM blacklist count.
+
+2. Check the Mule Accounts sheet:
+   - Source data.
+   - National ID counting rule.
+   - Normal/Mule counts.
+   - Call Sign comments.
+
+3. Confirm Slide 2 matches the Digital Wallets Excel results.
+
+4. Confirm Slide 3 matches the Mule Accounts Excel results.
+
+5. Remove sample figures/placeholders and confirm that all reported actions are supported by source records.
+
+6. Save the completed `FTA-Scan Result vX.X` workbook and `FTA-Results` PowerPoint.
+
+7. Email both files to Ohood (Inventory team) for review, following the approved internal recipient list.
+
+## Expected Output
+
+Completed Excel workbook and PowerPoint submitted for review.
+
+## Suggested Submission Email
+
+**Subject:** FTA Results – Digital Wallets & Mule Accounts – For Review
+
+Hi Ohood,
+
+Please find attached the completed FTA Scan Results Excel workbook and the updated FTA Results PowerPoint presentation for your review.
+
+The workbook contains the Digital Wallets and Mule Accounts results, and the presentation includes the corresponding summary figures and action-taken comments.
+
+Please let me know if any corrections or additional information are required.
+
+Regards,  
+[Your Name]
+
+---
+
+# 11. Final Checklist
+
+Use this checklist before submitting the report.
+
+- [ ] All five attachments received and saved in the approved location.
+- [ ] Card Number and Card Status columns reviewed/updated where applicable.
+- [ ] Unique card count calculated from `ENCRYPTED_PAN`.
+- [ ] Unique device count calculated from `SEID`.
+- [ ] Blacklisted device count verified in EFM.
+- [ ] Digital Wallets Slide 2 updated and reconciled to Excel.
+- [ ] Mule Account data and classifications received from the Call Sign team.
+- [ ] Total National ID counting rule confirmed and applied.
+- [ ] False positives (Normal) and true positives (Mule) calculated.
+- [ ] Mule Accounts Slide 3 updated and reconciled to Excel.
+- [ ] Action-taken comments confirmed by the responsible team.
+- [ ] Final Excel and PowerPoint saved and submitted to the Inventory team.
+
+---
+
+# 12. Controls and Clarifications
+
+1. Use distinct counts for `ENCRYPTED_PAN` and `SEID` as required by the source procedure.
+2. Verify blacklist status in EFM. A scan result alone does not establish that a device is blacklisted.
+3. Use the source procedure's definitions:
+   - Normal = False Positive.
+   - Mule = True Positive.
+4. Confirm whether total National IDs means all records or distinct IDs. The screenshots do not specify deduplication for this metric.
+5. Confirm whether Digital Wallets IoF is a separate file or a sheet in a workbook.
+6. Use approved internal systems and recipients when handling card information, National IDs and fraud-related data.
+
+---
+
+**End of Document**
+
+FTA Report – Digital Wallets & Mule Accounts  
+Standard Operating Procedure (SOP)
